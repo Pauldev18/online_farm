@@ -17,11 +17,17 @@ public class UserInfoUserDetails implements UserDetails {
 
     private String name;
     private String password;
+    private User user;
+    private String sdt;
+
     private List<GrantedAuthority> authorities;
 
     public UserInfoUserDetails(User userInfo) {
-        name = userInfo.getFullName();
-        password = userInfo.getPassWord();
+        name=userInfo.getEmail();
+        password=userInfo.getPassWord();
+        authorities = userInfo.getRoles().stream()
+                .map(role -> new SimpleGrantedAuthority(role.getName()))
+                .collect(Collectors.toList());
 
     }
     @Override
@@ -29,9 +35,29 @@ public class UserInfoUserDetails implements UserDetails {
         return authorities;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public String getSdt() {
+        return sdt;
+    }
+
+    public void setSdt(String sdt) {
+        this.sdt = sdt;
+    }
+
     @Override
     public String getPassword() {
         return password;
+    }
+
+    public void setPassWord(String password) {
+        this.password = password;
     }
 
     @Override

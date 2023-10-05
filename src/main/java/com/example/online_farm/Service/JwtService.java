@@ -22,9 +22,9 @@ public class JwtService {
 
 
 
-    private static final Key secret = Keys.secretKeyFor(SignatureAlgorithm.HS512);
+    private static final String secret = "quanganhtest12312821893289138912893891289389aaaaaaaaaaaaaaaaaaaaaaaa212312313sdfsdfsdfsdf23423423";
 
-    private static final String secretString = Base64.getEncoder().encodeToString(secret.getEncoded());
+//    private static final String secretString = Base64.getEncoder().encodeToString(secret.getEncoded());
 
 
 
@@ -45,7 +45,7 @@ public class JwtService {
     private Claims extractAllClaims(String token) {
         return Jwts
                 .parserBuilder()
-                .setSigningKey(secretString)
+                .setSigningKey(getSignKey())
                 .build()
                 .parseClaimsJws(token)
                 .getBody();
@@ -68,10 +68,15 @@ public class JwtService {
 
     private String createToken(Map<String, Object> claims, String userName) {
         return Jwts.builder()
+                .setClaims(claims)
                 .setSubject(userName)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis()+1000*60*30))
-                .signWith(SignatureAlgorithm.HS512, secretString).compact();
+                .signWith(getSignKey(), SignatureAlgorithm.HS512).compact();
+    }
+    private Key getSignKey() {
+        byte[] keyBytes= Decoders.BASE64.decode(secret);
+        return Keys.hmacShaKeyFor(keyBytes);
     }
 
 }
