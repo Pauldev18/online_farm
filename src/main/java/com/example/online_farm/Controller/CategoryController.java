@@ -147,7 +147,7 @@ public class CategoryController {
                 .map(refreshTokenService::verifyExpiration)
                 .map(RefreshToken::getUser)
                 .map(userInfo -> {
-                    String accessToken = jwtService.generateToken(userInfo.getFullName());
+                    String accessToken = jwtService.generateToken(userInfo.getEmail());
                     return JwtResponse.builder()
                             .accessToken(accessToken)
                             .token(refreshTokenRequest.getToken())
