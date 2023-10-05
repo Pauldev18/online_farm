@@ -88,7 +88,7 @@ public class CategoryController {
                 .map(category -> {
                     CategoryDTO categoryDTO = new CategoryDTO();
                     categoryDTO.set_id(String.valueOf(category.getId()));
-                    categoryDTO.setName(category.getName())
+                    categoryDTO.setName(category.getName());
                     return categoryDTO;
                 })
                 .collect(Collectors.toList());
@@ -115,6 +115,8 @@ public class CategoryController {
             userData.setAccessToken("Bearer " + token);
             userData.setName(user.get().getFullName());
             userData.setPhone(user.get().getSdt());
+            userData.setAddress(user.get().getAddress());
+            userData.setEmail(user.get().getEmail());
             userData.getCreatedAt();
             userData.getAddress();
             userData.getPhone();
