@@ -11,8 +11,8 @@ public class CartItem {
     private int Id;
     @Column(name="quantity")
     private int quantity;
-    @Column(name="card_id")
-    private int cardId;
+    @Column(name="cart_id")
+    private int cartId;
     @Column(name="product_id")
     private int productId;
 
@@ -22,7 +22,7 @@ public class CartItem {
     public CartItem(int id, int quantity, int cardId, int productId) {
         Id = id;
         this.quantity = quantity;
-        this.cardId = cardId;
+        this.cartId = cardId;
         this.productId = productId;
     }
 
@@ -43,11 +43,11 @@ public class CartItem {
     }
 
     public int getCardId() {
-        return cardId;
+        return cartId;
     }
 
     public void setCardId(int cardId) {
-        this.cardId = cardId;
+        this.cartId = cardId;
     }
 
     public int getProductId() {

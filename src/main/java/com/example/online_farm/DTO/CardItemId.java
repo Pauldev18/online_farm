@@ -3,6 +3,15 @@ package com.example.online_farm.DTO;
 public class CardItemId {
     private int productId;
     private int buyCount;
+    private int cartId;
+
+    public int getCartId() {
+        return cartId;
+    }
+
+    public void setCartId(int cartId) {
+        this.cartId = cartId;
+    }
 
     public int getProductId() {
         return productId;

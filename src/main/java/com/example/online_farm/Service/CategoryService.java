@@ -12,6 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 @Service
 public class CategoryService {
@@ -32,6 +33,8 @@ public class CategoryService {
         User user = new User();
         user.setEmail(userInfo.getUsername());
         user.setPassWord(passwordEncoder.encode(userInfo.getPassword()));
+        user.setCreatedAt(new Date());
+        user.setUpdatedAt(new Date());
 
         Role roleUser = roleRepository.findByName("ROLE_USER");
 

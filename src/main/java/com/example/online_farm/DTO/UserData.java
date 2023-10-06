@@ -15,7 +15,19 @@ public class UserData {
     private String phone;
     private Date createdAt;
     private Date updatedAt;
+    private Date birthDay;
 
+    public void setExpires(String expires) {
+        this.expires = expires;
+    }
+
+    public Date getBirthDay() {
+        return birthDay;
+    }
+
+    public void setBirthDay(Date birthDay) {
+        this.birthDay = birthDay;
+    }
 
     public String getAccessToken() {
         return accessToken;

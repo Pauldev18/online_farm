@@ -3,10 +3,7 @@ package com.example.online_farm.Entity;
 import jakarta.persistence.*;
 import jakarta.persistence.*;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name="users")
@@ -27,6 +24,15 @@ public class User {
     private String sdt;
     @Column(name="avatar")
     private String avatar;
+    @Column(name="created_at")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdAt;
+    @Column(name="updated_at")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date updatedAt;
+    @Column(name="birthday")
+    private Date birthDay;
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "users_roles",
@@ -39,13 +45,41 @@ public class User {
     public User() {
     }
 
-    public User(int id, String fullName, String email, String address, String sdt, String avatar) {
+    public User(int id, String fullName, String email, String address, String password, String sdt, String avatar, Date createdAt, Date updatedAt, Date birthDay) {
         Id = id;
         this.fullName = fullName;
         this.email = email;
         this.address = address;
+        this.password = password;
         this.sdt = sdt;
         this.avatar = avatar;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.birthDay = birthDay;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public Date getBirthDay() {
+        return birthDay;
+    }
+
+    public void setBirthDay(Date birthDay) {
+        this.birthDay = birthDay;
     }
 
     public int getId() {

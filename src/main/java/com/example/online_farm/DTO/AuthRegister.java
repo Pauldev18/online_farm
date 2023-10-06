@@ -1,6 +1,9 @@
 package com.example.online_farm.DTO;
 
+import jakarta.validation.constraints.Size;
+
 public class AuthRegister {
+
     private String message;
     private UserRegister userRegister;
 

@@ -15,8 +15,8 @@ public class ProductController {
     }
 
     @GetMapping("/products")
-    public ProductsLimit getProducts(@RequestParam(defaultValue = "2") int page,
-                                     @RequestParam(defaultValue = "2") int limit) {
+    public ProductsLimit getProducts(@RequestParam(defaultValue = "1") int page,
+                                     @RequestParam(defaultValue = "30") int limit) {
         return productService.getAllProducts(page, limit);
     }
 }

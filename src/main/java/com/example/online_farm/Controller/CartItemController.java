@@ -29,6 +29,7 @@ public class CartItemController {
             CartItem cartItem = new CartItem();
             cartItem.setProductId(cartItemRequest.getProductId());
             cartItem.setQuantity(cartItemRequest.getBuyCount());
+            cartItem.setCardId(cartItemRequest.getCartId());
 
             // Lưu đối tượng vào cơ sở dữ liệu sử dụng JpaRepository
             cartItemRepository.save(cartItem);
@@ -44,7 +45,8 @@ public class CartItemController {
     public ResponseEntity<String> updateCartItem(@RequestBody CardItemId cartItemRequest) {
         try {
             // Lấy ra cartItem từ cơ sở dữ liệu bằng productId
-            CartItem cartItem = cartItemRepository.findByProductId(cartItemRequest.getProductId());
+            CartItem cartItem = cartItemRepository.findByProductIdAndCartId(
+                    cartItemRequest.getProductId(), cartItemRequest.getCartId());
 
             // Kiểm tra xem cartItem có tồn tại hay không
             if (cartItem == null) {
@@ -61,6 +63,7 @@ public class CartItemController {
             return ResponseEntity.status(HttpStatus.OK).body("Cập nhật thành công");
         } catch (Exception e) {
             // Nếu có lỗi, trả về thông báo lỗi và mã trạng thái 500 Internal Server Error
+            e.printStackTrace(); // In ra lỗi để xem lỗi cụ thể
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Lỗi khi cập nhật");
         }
     }
@@ -69,12 +72,20 @@ public class CartItemController {
         try {
             List<CartItem> cartItems = new ArrayList<>();
 
-            // Lặp qua danh sách đối tượng từ yêu cầu và thêm vào danh sách cartItems
             for (CardItemId cartItemRequest : requestList.getCartItems()) {
-                CartItem cartItem = new CartItem();
-                cartItem.setProductId(cartItemRequest.getProductId());
-                cartItem.setQuantity(cartItemRequest.getBuyCount());
-                cartItems.add(cartItem);
+                boolean check = cartItemRepository.existsByCartIdAndProductId(
+                        cartItemRequest.getProductId(), cartItemRequest.getCartId());
+                // Kiểm tra xem đã tồn tại bản ghi với cartId và productId tương ứng
+                if (check== false) {
+                    CartItem cartItem = new CartItem();
+                    cartItem.setProductId(cartItemRequest.getProductId());
+                    cartItem.setQuantity(cartItemRequest.getBuyCount());
+                    cartItem.setCardId(cartItemRequest.getCartId());
+                    cartItems.add(cartItem);
+                }
+                else{
+                    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Lỗi khi thêm vào giỏ hàng");
+                }
             }
 
             // Lưu danh sách đối tượng vào cơ sở dữ liệu sử dụng JpaRepository
@@ -87,6 +98,7 @@ public class CartItemController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Lỗi khi thêm vào giỏ hàng");
         }
     }
+
 
     @DeleteMapping("/remove-products")
     public ResponseEntity<String> removeMultipleFromCart(@RequestBody CardItemIdList requestList) {
@@ -117,10 +129,6 @@ public class CartItemController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Lỗi khi xóa");
         }
     }
-
-
-
-
 
 
 

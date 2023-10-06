@@ -2,6 +2,7 @@ package com.example.online_farm.DTO;
 
 import com.example.online_farm.Entity.Role;
 
+import java.util.Date;
 import java.util.List;
 
 public class UserAllDTO {
@@ -11,8 +12,9 @@ public class UserAllDTO {
     private String name;
     private String address;
     private String phone;
-    private String createdAt;
-    private String updateAt;
+    private Date createdAt;
+    private Date updateAt;
+    private Date birthDay;
 
     public int getId() {
         return Id;
@@ -62,19 +64,27 @@ public class UserAllDTO {
         this.phone = phone;
     }
 
-    public String getCreatedAt() {
+    public Date getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(String createdAt) {
+    public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
 
-    public String getUpdateAt() {
+    public Date getUpdateAt() {
         return updateAt;
     }
 
-    public void setUpdateAt(String updateAt) {
+    public void setUpdateAt(Date updateAt) {
         this.updateAt = updateAt;
+    }
+
+    public Date getBirthDay() {
+        return birthDay;
+    }
+
+    public void setBirthDay(Date birthDay) {
+        this.birthDay = birthDay;
     }
 }
